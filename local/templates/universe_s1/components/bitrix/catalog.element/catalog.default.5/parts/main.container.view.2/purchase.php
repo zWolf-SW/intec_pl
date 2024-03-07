@@ -64,20 +64,21 @@ use intec\core\helpers\Html;
                     <div class="catalog-element-purchase-block">
                         <?php include(__DIR__ . '/../offers.php'); ?>
                     </div>
-                <?php } ?>
-						<?
+					<?	
 						$cc = $arResult["DETAIL_PAGE_URL"];
 						$pp = 'ekipirovka';
 						$pos1 = stripos($cc, $pp);
 						if ($pos1 > 0) {
-					    echo "<button type='button' class='btn btn-primary' ".
-					         "	data-toggle='modal' ".
-							 "  data-target='#tablModal' ".
-							 "  data-img='$nFile' >".
-				             "  Таблица размеров".
-							 "  </button>";
-						}
-						?>						
+							if ($nFile != '') {
+						    echo "  <button type='button' class='btn btn-primary' style='margin-top:4px;margin-bottom:4px'".
+						         "	data-toggle='modal' ".
+								 "  data-target='#tablModal' ".
+								 "  data-img='$nFile' >".
+					             "  Таблица размеров".
+								 "  </button>";
+							}
+						} ?>
+                <?php } ?>
                 <?php if ($arResult['SHARES']['SHOW']) { ?>
                     <div class="catalog-element-purchase-block">
                         <?php include(__DIR__ . '/../shares.php') ?>

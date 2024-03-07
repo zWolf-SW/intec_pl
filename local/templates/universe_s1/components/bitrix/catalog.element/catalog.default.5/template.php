@@ -127,66 +127,70 @@ if ($bBase && $arVisual['PRICE']['RECALCULATION'])
             <div class="intec-content-wrapper">
                 <div class="catalog-element-main-container">
                     <?php
-// --------------==========================------------------------
-/*привязка свойства раздела UF_RAZMERU к разделу из Таблицы размеров*/
-$select = [
-	"IBLOCK_ID","UF_RAZMERU","IBLOCK_TYPE"
-];
+					// --------------==========================------------------------
+					/*привязка свойства раздела UF_RAZMERU к разделу из Таблицы размеров*/
+					$select = [
+						"IBLOCK_ID","UF_RAZMERU","IBLOCK_TYPE"
+					];
 
-$sort = [
-	"SORT" => "ASC"
-];
+					$sort = [
+						"SORT" => "ASC"
+					];
 
-$filter = [
-	'IBLOCK_ID' => $arResult["ORIGINAL_PARAMETERS"]["IBLOCK_ID"],
-	'CODE' => $arResult["ORIGINAL_PARAMETERS"]["SECTION_CODE"]
-];
+					$filter = [
+						'IBLOCK_ID' => $arResult["ORIGINAL_PARAMETERS"]["IBLOCK_ID"],
+						'CODE' => $arResult["ORIGINAL_PARAMETERS"]["SECTION_CODE"]
+					];
 
-$rsResult = CIBlockSection::GetList(
-	$sort,
-	$filter,
-	false,
-	$select
-);
-while($arrResult = $rsResult->GetNext())
-{
-	$razmeru_section_id = $arrResult['UF_RAZMERU'];
-}
-//--------=================----------------------------------------
+					$rsResult = CIBlockSection::GetList(
+					$sort,
+					$filter,
+					false,
+					$select
+					);
+					while($arrResult = $rsResult->GetNext())
+					{
+						$razmeru_section_id = $arrResult['UF_RAZMERU'];
+					}
+					//--------=================----------------------------------------
 
-//                        var_dump($razmeru_section_id);
-
-/*выборка из раздела элемента с нужным брендом*/
-if(!empty($razmeru_section_id)) {
-
-	$res = CIBlock::GetList(
-		Array(),
-		Array(
-			'SITE_ID'=> 's1',
-			'ACTIVE'=>'Y',
-			"CNT_ACTIVE"=>"Y",
-			"=CODE"=>'aspro_next_tablicu_razmerov'
-		), true
-	);
-	while($ar_res = $res->Fetch())
-	{
-		$razmeru_iblock_id = $ar_res['ID'];
-	}
-//--------=================----------------------------------------
-	$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DETAIL_PICTURE");
-	$arFilter = Array("IBLOCK_ID"=>$razmeru_iblock_id, "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y","SECTION_ID"=>$razmeru_section_id,"=PROPERTY_BRAND_TR" => $arResult["PROPERTIES"]["BRAND"]["VALUE"]);
-	$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1), $arSelect);
-	while($ob = $res->GetNextElement())
-	{
-		$arFild = $ob->GetFields();
-		$dTable=$arFild["DETAIL_PICTURE"];
-	}
-
-}
-$nFile = '';
-$arFile["SRC"] = '';
-$arFile = CFile::GetFileArray($dTable);
-$nFile = $arFile["SRC"];
+					/*выборка из раздела элемента с нужным брендом*/
+					if(!empty($razmeru_section_id)) {
+						$res = CIBlock::GetList(
+							Array(),
+							Array(
+								'SITE_ID'=> 's1',
+								'ACTIVE'=>'Y',
+								"CNT_ACTIVE"=>"Y",
+								"=CODE"=>'aspro_next_tablicu_razmerov'
+							), true
+						);
+						while($ar_res = $res->Fetch())
+						{
+							$razmeru_iblock_id = $ar_res['ID'];
+						}
+					//--------=================----------------------------------------
+						$brr = $arResult["PROPERTIES"]["BRAND"]["VALUE"];
+						$dTable = "";
+						if ($brr != ""){
+							$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DETAIL_PICTURE");
+							$arFilter = Array("IBLOCK_ID"=>$razmeru_iblock_id, "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y","SECTION_ID"=>$razmeru_section_id,"=PROPERTY_BRAND_TR" => $arResult["PROPERTIES"]["BRAND"]["VALUE"]);
+							$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1), $arSelect);
+							while($ob = $res->GetNextElement())
+							{
+								$arFild = $ob->GetFields();
+								$dTable=$arFild["DETAIL_PICTURE"];
+							}
+						}
+					}
+					$nFile = '';
+					$arFile["SRC"] = '';
+					$arFile = CFile::GetFileArray($dTable);
+					if ($dTable != ""){
+						$nFile = $arFile["SRC"];
+					}else{
+						$nFile = '';
+					}
                         include(__DIR__ . '/parts/main.container.view.'.$arVisual['MAIN_VIEW'].'.php');
                     ?>
                 </div>
