@@ -168,17 +168,12 @@ $APPLICATION->SetTitle("Trade In");
 	false
 );?>
 </div>
-<!--<div class='modal' id='tablModal' tabindex='-1' role='dialog' style='background-color:#fff; margin: auto;'>
-   	<div class='modal-content' align='center'>-->
 
 <div class="modal fade" id="tablModal" tabindex="-1" role="dialog" aria-labelledby="newsModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-
-
 			<button type='button' data-dismiss='modal' style='position: absolute; top:12px; right:16px;'>X</button>
 		    <h4 align=center>Таблица размеров</h4>
-<!--		<img id='nFile' src=''>-->
 			<div class="modal-img"></div>
 	    </div>
     </div>

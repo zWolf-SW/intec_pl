@@ -70,12 +70,12 @@ use intec\core\helpers\Html;
 						$pos1 = stripos($cc, $pp);
 						if ($pos1 > 0) {
 							if ($nFile != '') {
-						    echo "  <button type='button' class='btn btn-primary' style='margin-top:4px;margin-bottom:4px'".
-						         "	data-toggle='modal' ".
-								 "  data-target='#tablModal' ".
-								 "  data-img='$nFile' >".
-					             "  Таблица размеров".
-								 "  </button>";
+						    echo "<button type='button' class='btn btn-primary' style='margin-top:4px;margin-bottom:4px'".
+						         "data-toggle='modal' ".
+								 "data-target='#tablModal' ".
+								 "data-img='$nFile' >".
+					             "Таблица размеров".
+								 "</button>";
 							}
 						} ?>
                 <?php } ?>
